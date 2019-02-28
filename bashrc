@@ -123,7 +123,6 @@ export PYTHONDONTWRITEBYTECODE=1
 
 #alias pycharm='/home/kin/pycharm-community-2018.2.3/bin/pycharm.sh'
 
-export PATH="/home/kin/pycharm-community-2018.2.3/bin:$PATH"
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 
 # ~/.bashrc
