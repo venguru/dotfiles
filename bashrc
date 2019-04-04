@@ -128,16 +128,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # ~/.bashrc
 eval "$(direnv hook bash)"
 
-alias fig='docker-compose'
-
 export PATH=$PATH:/usr/lib/go-1.12/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
-alias g='cd $(ghq root)/$(ghq list | peco)'
-alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
-
-function find_cd() {
-        cd "$(find . -type d | peco)"  
-}
-alias fc="find_cd"
