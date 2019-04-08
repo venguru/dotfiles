@@ -10,3 +10,5 @@ function find_cd() {
 }
 alias fc="find_cd"
 
+# tmux
+alias tmux="tmux -2"
