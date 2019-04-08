@@ -128,6 +128,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # ~/.bashrc
 eval "$(direnv hook bash)"
 
+# go
 export PATH=$PATH:/usr/lib/go-1.12/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
