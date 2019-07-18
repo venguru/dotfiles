@@ -133,3 +133,7 @@ export PATH=$PATH:/usr/lib/go-1.12/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+if [ $OSTYPE = "msys" ]; then
+    export PATH="C:\Program Files\Docker\Docker\resources\bin:$PATH"
+fi
+
