@@ -134,6 +134,17 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 if [ $OSTYPE = "msys" ]; then
+    # docker
     export PATH="C:\Program Files\Docker\Docker\resources\bin:$PATH"
+
+    # ping文字化け対策
+    function wincmd() {
+        CMD=$1
+        shift
+        $CMD $* 2>&1 | iconv -f cp932 -t utf-8
+    }
+    alias ipconfig='wincmd ipconfig'
+    alias netstat='wincmd netstat'
+    alias ping='wincmd ping'
 fi
 
