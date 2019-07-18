@@ -7,11 +7,13 @@ if [ ! -e $vim_color ];then
     wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $dir
 fi
 
-ln -sf ~/dotfiles/vimrc ~/.vimrc
-ln -sf ~/dotfiles/bash_profile ~/.bash_profile
-ln -sf ~/dotfiles/bashrc ~/.bashrc
-ln -sf ~/dotfiles/bash_aliases ~/.bash_aliases
-ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
+DOTPATH=~/dotfiles
+for f in .??*
+do
+    [ "$f" = ".git" ] && continue
+
+    ln -snfv "$DOTPATH"/"$f" "$HOME"/"$f"
+done
 
 source ~/.bashrc
 
