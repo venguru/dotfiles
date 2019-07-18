@@ -12,3 +12,19 @@ alias fc="find_cd"
 
 # tmux
 alias tmux="tmux -2"
+
+# git
+alias g='git'
+alias s='git status'
+alias m='git checkout master'
+alias d='git diff'
+
+# docker
+alias dp='docker ps'
+alias dpa='docker ps -a'
+alias di='docker images'
+alias dr='docker run'
+alias ds='docker start'
+alias drm='docker rm'
+alias drmi='docker rmi'
+
