@@ -2,7 +2,7 @@ dir="../.vim/colors"
 vim_color=$dir"/hybrid.vim"
 if [ ! -e $vim_color ];then
     if [ ! -e $dir ]; then
-        makedirs $dir
+        mkdir -p $dir
     fi
     wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $dir
 fi
