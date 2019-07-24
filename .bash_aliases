@@ -25,6 +25,7 @@ alias dpa='docker ps -a'
 alias di='docker images'
 alias dr='docker run'
 alias ds='docker start'
+alias dst='docker stop'
 alias drm='docker rm'
 alias drmi='docker rmi'
 
