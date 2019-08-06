@@ -29,3 +29,6 @@ alias dst='docker stop'
 alias drm='docker rm'
 alias drmi='docker rmi'
 
+# tmux
+alias tmux='rm -rf /tmp/tmux* && tmux'
+
