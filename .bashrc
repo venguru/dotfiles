@@ -116,12 +116,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# added by Anaconda3 installer
-export PATH="/home/kin/anaconda3/bin:$PATH"
-
 export PYTHONDONTWRITEBYTECODE=1
-
-#alias pycharm='/home/kin/pycharm-community-2018.2.3/bin/pycharm.sh'
 
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 
