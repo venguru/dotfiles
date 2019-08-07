@@ -69,4 +69,20 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 :set encoding=utf-8
 :set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8,shift_jis,cp932,ucs-bom
 
+" NeoBundle
+set nocompatible
+filetype plugin indent off
+
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim
+    call neobundle#begin(expand('~/.vim/bundle'))
+    NeoBundleFetch 'Shougo/neobundle.vim'
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/vimfiler'
+    call neobundle#end()
+endif 
+
+filetype plugin indent on
+
+nmap sf :VimFilerBufferDir<Return>
 
