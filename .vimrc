@@ -86,3 +86,4 @@ filetype plugin indent on
 
 nmap sf :VimFilerBufferDir<Return>
 
+set backspace=indent,eol,start
