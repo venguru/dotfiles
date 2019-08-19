@@ -98,6 +98,12 @@ direnv() {
     echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 }
 
+pythonz() {
+    curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+    echo '[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc' >> $HOME/.bashrc
+    exec $SHELL
+}
+
 initialize() {
     echo "init"
 
@@ -139,6 +145,7 @@ initialize() {
     peco
     enhancd
     direnv
+    pythonz
 
     deploy
 

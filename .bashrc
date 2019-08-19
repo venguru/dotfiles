@@ -118,8 +118,6 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
-
 # go
 export PATH=$PATH:/usr/lib/go-1.12/bin
 export GOPATH=$HOME/go
@@ -146,3 +144,4 @@ export TMUX_TMPDIR=/tmp
 export PATH=$PATH:$HOME/bin
 
 eval "$(direnv hook bash)"
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
