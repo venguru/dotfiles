@@ -143,3 +143,8 @@ if [ $OSTYPE = "msys" ]; then
     alias ping='wincmd ping'
 fi
 
+# tmux
+export TMUX_TMPDIR=/tmp
+
+export PATH=$PATH:$HOME/bin
+

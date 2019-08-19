@@ -1,15 +1,98 @@
 #!/bin/bash
 
-initialize() {
+# PLATFORM is the environment variable that
+# retrieves the name of the running platform
+export PLATFORM
 
+# ostype returns the lowercase OS name
+ostype() {
+    # shellcheck disable=SC2119
+    uname | lower
+}
+
+# os_detect export the PLATFORM variable as you see fit
+os_detect() {
+    export PLATFORM
+    case "$(ostype)" in
+        *'linux'*)  PLATFORM='linux'   ;;
+        *'darwin'*) PLATFORM='osx'     ;;
+        *'bsd'*)    PLATFORM='bsd'     ;;
+        *)          PLATFORM='unknown' ;;
+    esac
+}
+
+# is_osx returns true if running OS is Macintosh
+is_osx() {
+    os_detect
+    if [ "$PLATFORM" = "osx" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+alias is_mac=is_osx
+
+# is_linux returns true if running OS is GNU/Linux
+is_linux() {
+    os_detect
+    if [ "$PLATFORM" = "linux" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# is_bsd returns true if running OS is FreeBSD
+is_bsd() {
+    os_detect
+    if [ "$PLATFORM" = "bsd" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# get_os returns OS name of the platform that is running
+get_os() {
+    local os
+    for os in osx linux bsd; do
+        if is_$os; then
+            echo $os
+        fi
+    done
+}
+
+peco() {
+    latest=$(
+    curl -fsSI https://github.com/peco/peco/releases/latest |
+        tr -d '\r' |
+        awk -F'/' '/^Location:/{print $NF}'
+    )
+
+    : ${latest:?}
+
+    mkdir -p $HOME/bin
+
+    curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
+
+    chmod +x $HOME/bin/peco
+
+    $HOME/bin/peco --version
+}
+
+initialize() {
     echo "init"
-    dir="../.vim/colors"
+
+    DOTPATH=~/dotfiles
+
     vim_color=$dir"/hybrid.vim"
     if [ ! -e $vim_color ];then
-        if [ ! -e $dir ]; then
-            mkdir -p $dir
+        vimdir="../.vim/colors"
+        if [ ! -e $vimdir ]; then
+            mkdir -p $vimdir
         fi
-        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $dir
+        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
     fi
 
     # git が使えるなら git
@@ -35,6 +118,19 @@ initialize() {
     else
         die "curl or wget required"
     fi
+
+    # peco
+    peco
+
+
+    deploy
+
+    # enhancd
+    # ghq
+    # pythonz
+    # docker
+    # go
+    # direnv
 }
 
 deploy() {
