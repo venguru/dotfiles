@@ -1,0 +1,17 @@
+#!/bin/bash
+
+to_winpath(){
+    local abs_path=`readlink -f $1`
+    if echo $abs_path | grep -q /mnt/c; then
+        local win_path="C:"${abs_path#/mnt/c}
+        echo ${win_path//\//\\}
+    else
+
+        local wsl_path=`powershell.exe -Command 'echo ($env:LOCALAPPDATA + "\lxss")' | tr -d '\r'`
+        local internal_path=${abs_path//\//\\}
+        echo "${wsl_path}${internal_path}"
+    fi
+}
+
+/mnt/c/Windows/explorer.exe `to_winpath $@`
+

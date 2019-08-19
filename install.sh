@@ -104,6 +104,11 @@ pythonz() {
     exec $SHELL
 }
 
+file_open() {
+    # only for used on WSL
+    ln -s $DOTPATH/shell/fs $HOME/bin/fs
+}
+
 initialize() {
     echo "init"
 
@@ -146,6 +151,8 @@ initialize() {
     enhancd
     direnv
     pythonz
+
+    file_open
 
     deploy
 
