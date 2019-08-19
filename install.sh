@@ -81,6 +81,12 @@ peco() {
     $HOME/bin/peco --version
 }
 
+enhancd() {
+    git clone https://github.com/b4b4r07/enhancd $HOME
+    echo "source ~/enhancd/init.sh"  >> ~/.bash_profile
+    source ~/.bash_profile
+}
+
 initialize() {
     echo "init"
 
@@ -122,10 +128,10 @@ initialize() {
     # peco
     peco
 
+    enhancd
 
     deploy
 
-    # enhancd
     # ghq
     # pythonz
     # docker
