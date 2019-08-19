@@ -87,6 +87,17 @@ enhancd() {
     source ~/.bash_profile
 }
 
+direnv() {
+    latest=$(
+    curl -fsSI https://github.com/direnv/direnv/releases/latest |
+        tr -d '\r' |
+        awk -F'/' '/^Location:/{print $NF}'
+    )
+    wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
+    chmod +x $HOME/bin/direnv
+    echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+}
+
 initialize() {
     echo "init"
 
@@ -125,10 +136,9 @@ initialize() {
         die "curl or wget required"
     fi
 
-    # peco
     peco
-
     enhancd
+    direnv
 
     deploy
 
