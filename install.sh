@@ -109,6 +109,10 @@ file_open() {
     ln -s $DOTPATH/shell/fs $HOME/bin/fs
 }
 
+tmux_split_window() {
+    ln -s $DOTPATH/shell/ide $HOME/bin/ide
+}
+
 initialize() {
     echo "init"
 
@@ -153,6 +157,7 @@ initialize() {
     pythonz
 
     file_open
+    tmux_split_window
 
     deploy
 

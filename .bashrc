@@ -145,3 +145,4 @@ export PATH=$PATH:$HOME/bin
 
 eval "$(direnv hook bash)"
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+export DISPLAY=localhost:0.0
