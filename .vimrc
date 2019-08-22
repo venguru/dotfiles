@@ -1,7 +1,8 @@
 set background=dark
 "colorscheme molokai
 "colorscheme iceberg
-colorscheme hybrid
+"colorscheme hybrid
+colorscheme hybrid_custom
 set t_Co=256
 set tabstop=4
 set autoindent
