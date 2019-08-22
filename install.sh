@@ -1,8 +1,13 @@
 #!/bin/bash
+set -eux
 
 # PLATFORM is the environment variable that
 # retrieves the name of the running platform
 export PLATFORM
+
+has() {
+        type "${1:?too few arguments}" &>/dev/null
+}
 
 # ostype returns the lowercase OS name
 ostype() {
@@ -63,74 +68,35 @@ get_os() {
     done
 }
 
-vim_colors() {
-    vimdir="$DOTPATH/.vim/colors"
-
-    if [ ! -e $vimdir"/hybrid.vim" ];then
-        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
-    fi
-
-    if [ ! -e $vimdir"/iceberg.vim" ];then
-        wget https://raw.githubusercontent.com/cocopon/iceberg.vim/master/colors/iceberg.vim -P $vimdir
-    fi
-
-    if [ ! -e $vimdir"/molokai.vim" ];then
-        wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
-    fi
+lower() {
+    if [ $# -eq 0 ]; then
+        cat <&0
+    elif [ $# -eq 1 ]; then
+        if [ -f "$1" -a -r "$1" ]; then
+            cat "$1"
+        else
+            echo "$1"
+        fi
+    else
+        return 1
+    fi | tr "[:upper:]" "[:lower:]"
 }
 
-peco() {
-    latest=$(
-    curl -fsSI https://github.com/peco/peco/releases/latest |
-        tr -d '\r' |
-        awk -F'/' '/^Location:/{print $NF}'
-    )
-
-    : ${latest:?}
-
-    mkdir -p $HOME/bin
-
-    curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
-
-    chmod +x $HOME/bin/peco
-
-    $HOME/bin/peco --version
+upper() {
+    if [ $# -eq 0 ]; then
+        cat <&0
+    elif [ $# -eq 1 ]; then
+        if [ -f "$1" -a -r "$1" ]; then
+            cat "$1"
+        else
+            echo "$1"
+        fi
+    else
+        return 1
+    fi | tr "[:lower:]" "[:upper:]"
 }
 
-enhancd() {
-    git clone https://github.com/b4b4r07/enhancd $HOME
-    source ~/.bash_profile
-}
-
-direnv() {
-    latest=$(
-    curl -fsSI https://github.com/direnv/direnv/releases/latest |
-        tr -d '\r' |
-        awk -F'/' '/^Location:/{print $NF}'
-    )
-    wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
-    chmod +x $HOME/bin/direnv
-}
-
-pythonz() {
-    curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-    exec $SHELL
-}
-
-file_open() {
-    # only for used on WSL
-    ln -s $DOTPATH/shell/fs $HOME/bin/fs
-}
-
-tmux_split_window() {
-    ln -s $DOTPATH/shell/ide $HOME/bin/ide
-}
-
-initialize() {
-    echo "init"
-
-    DOTPATH=~/dotfiles
-
+download_repo() {
     # git が使えるなら git
     if has "git"; then
         git clone --recursive "$GITHUB_URL" "$DOTPATH"
@@ -155,22 +121,109 @@ initialize() {
         die "curl or wget required"
     fi
 
-    vim_colors
-    peco
-    enhancd
-    direnv
-    pythonz
+}
 
-    file_open
-    tmux_split_window
+vim_colors() {
+    vimdir="$DOTPATH/.vim/colors"
+
+    if [ ! -e $vimdir"/hybrid.vim" ];then
+        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
+    fi
+
+    if [ ! -e $vimdir"/iceberg.vim" ];then
+        wget https://raw.githubusercontent.com/cocopon/iceberg.vim/master/colors/iceberg.vim -P $vimdir
+    fi
+
+    if [ ! -e $vimdir"/molokai.vim" ];then
+        wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
+    fi
+}
+
+install_peco() {
+    latest=$(
+    curl -fsSI https://github.com/peco/peco/releases/latest |
+        tr -d '\r' |
+        awk -F'/' '/^Location:/{print $NF}'
+    )
+
+    : ${latest:?}
+
+    mkdir -p $HOME/bin
+
+    if is_osx ; then
+        curl -fsSL "https://github.com/peco/peco/releases/download/v0.5.3/peco_darwin_amd64.zip" -o peco_darwin_amd64.zip
+        unzip peco_darwin_amd64.zip
+        mv peco_darwin_amd64/peco $HOME/bin/peco
+        rm -fr peco_darwin_amd64*
+    elif is_linux ; then
+        curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
+    fi
+
+    chmod +x $HOME/bin/peco
+
+    $HOME/bin/peco --version
+}
+
+install_enhancd() {
+    git clone https://github.com/b4b4r07/enhancd $HOME/enhancd
+    source ~/.bash_profile
+}
+
+install_direnv() {
+    latest=$(
+    curl -fsSI https://github.com/direnv/direnv/releases/latest |
+        tr -d '\r' |
+        awk -F'/' '/^Location:/{print $NF}'
+    )
+
+    if is_osx ; then
+        wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
+    elif is_linux; then
+        wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
+    fi
+
+    chmod +x $HOME/bin/direnv
+}
+
+install_pythonz() {
+    curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+    exec $SHELL
+}
+
+file_open() {
+    # only for used on WSL
+    chmod +x $DOTPATH/shell/fs
+    ln -s $DOTPATH/shell/fs $HOME/bin/fs
+}
+
+tmux_split_window() {
+    chmod +x $DOTPATH/shell/ide
+    ln -s $DOTPATH/shell/ide $HOME/bin/ide
+}
+
+initialize() {
+    echo "init"
+
+    GITHUB_URL="https://github.com/venguru/dotfiles.git"
+    DOTPATH=~/dotfiles
+
+    if [ ! -e $DOTPATH ]; then
+        download_repo
+    fi
+
+    vim_colors
+    peco --version || install_peco
+    if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
+    if ! has "direnv"; then install_direnv; fi
+    if ! has "pythonz"; then install_pythonz; fi
+    if ! has "fs"; then file_open; fi
+    if ! has "ide"; then tmux_split_window; fi
 
     deploy
 
     # ghq
-    # pythonz
     # docker
     # go
-    # direnv
 }
 
 deploy() {

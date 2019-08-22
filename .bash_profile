@@ -1,4 +1,4 @@
-if [ -f ~/.bashrc ] ; then
-. ~/.bashrc
+if [ -f $HOME/.bashrc ] ; then
+. $HOME/.bashrc
 fi
-source ~/enhancd/init.sh
+source $HOME/enhancd/init.sh
