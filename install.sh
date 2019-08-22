@@ -63,6 +63,22 @@ get_os() {
     done
 }
 
+vim_colors() {
+    vimdir="$DOTPATH/.vim/colors"
+
+    if [ ! -e $vimdir"/hybrid.vim" ];then
+        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
+    fi
+
+    if [ ! -e $vimdir"/iceberg.vim" ];then
+        wget https://raw.githubusercontent.com/cocopon/iceberg.vim/master/colors/iceberg.vim -P $vimdir
+    fi
+
+    if [ ! -e $vimdir"/molokai.vim" ];then
+        wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
+    fi
+}
+
 peco() {
     latest=$(
     curl -fsSI https://github.com/peco/peco/releases/latest |
@@ -118,24 +134,15 @@ initialize() {
 
     DOTPATH=~/dotfiles
 
-    vim_color=$dir"/hybrid.vim"
-    if [ ! -e $vim_color ];then
-        vimdir="../.vim/colors"
-        if [ ! -e $vimdir ]; then
-            mkdir -p $vimdir
-        fi
-        wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
-    fi
-
-    # git $B$,;H$($k$J$i(B git
+    # git が使えるなら git
     if has "git"; then
         git clone --recursive "$GITHUB_URL" "$DOTPATH"
 
-    # $B;H$($J$$>l9g$O(B curl $B$+(B wget $B$r;HMQ$9$k(B
+    # 使えない場合は curl か wget を使用する
     elif has "curl" || has "wget"; then
         tarball="https://github.com/venguru/dotfiles/archive/master.tar.gz"
 
-        # $B$I$C$A$+$G%@%&%s%m!<%I$7$F!$(Btar $B$KN.$9(B
+        # どっちかでダウンロードして，tar に流す
         if has "curl"; then
             curl -L "$tarball"
 
@@ -144,13 +151,14 @@ initialize() {
 
         fi | tar zxv
 
-        # $B2rE`$7$?$i!$(BDOTPATH $B$KCV$/(B
+        # 解凍したら，DOTPATH に置く
         mv -f dotfiles-master "$DOTPATH"
 
     else
         die "curl or wget required"
     fi
 
+    vim_colors
     peco
     enhancd
     direnv
