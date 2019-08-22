@@ -99,7 +99,6 @@ peco() {
 
 enhancd() {
     git clone https://github.com/b4b4r07/enhancd $HOME
-    echo "source ~/enhancd/init.sh"  >> ~/.bash_profile
     source ~/.bash_profile
 }
 
@@ -111,12 +110,10 @@ direnv() {
     )
     wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
     chmod +x $HOME/bin/direnv
-    echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 }
 
 pythonz() {
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-    echo '[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc' >> $HOME/.bashrc
     exec $SHELL
 }
 
