@@ -58,6 +58,15 @@ is_bsd() {
     fi
 }
 
+is_wsl() {
+    os=$(uname -r)
+    if [[ $os == *microsoft* ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # get_os returns OS name of the platform that is running
 get_os() {
     local os
