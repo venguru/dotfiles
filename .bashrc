@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+source $HOME/dotfiles/install.sh
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -146,3 +148,7 @@ export PATH=$PATH:$HOME/bin
 eval "$(direnv hook bash)"
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 export DISPLAY=localhost:0.0
+
+# WSLの場合、Windowsで作成したフォルダの色分けを変更
+if is_wsl ; then LS_COLORS="${LS_COLORS}:ow=01;34"; export LS_COLORS; fi
+

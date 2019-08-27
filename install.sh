@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+#set -eux
 
 # PLATFORM is the environment variable that
 # retrieves the name of the running platform
@@ -255,9 +255,11 @@ deploy() {
     source ~/.bashrc
 }
 
-if [ "$1" = "--deploy" -o "$1" = "-d" ]; then
-    deploy
-elif [ "$1" = "--init" -o "$1" = "-i" ]; then
-    initialize
+if [ $# -eq 1 ]; then
+    if [ "$1" = "--deploy" -o "$1" = "-d" ]; then
+        deploy
+    elif [ "$1" = "--init" -o "$1" = "-i" ]; then
+        initialize
+    fi
 fi
 
