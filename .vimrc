@@ -84,7 +84,7 @@ nmap <Tab> :tabnext<Return>
 " dein
 " プラグインはWSLでは使用しない
 let uname = system('uname -r')
-if stridx(uname, 'microsoft') != -1 
+if stridx(uname, 'microsoft') == -1 
     " プラグインが実際にインストールされるディレクトリ
     let s:dein_dir = expand('~/.cache/dein')
     " dein.vim 本体
