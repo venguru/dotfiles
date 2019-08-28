@@ -1,0 +1,36 @@
+[user]
+	name = venguru
+	email = kin.sh0717@gmail.com
+
+[core]
+	autocrlf = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[alias]
+	today = log --since=midnight --author='venguru' --oneline
+    st = status
+    co = checkout
+    ci = commit
+    br = switch
+
+[diff]
+    tool                = vimdiff
+    algorithm           = histogram
+    compactionHeuristic = true
+
+[merge]
+    tool = vimdiff
+
+[color "diff"]
+    # http://qiita.com/qurage/items/452f2debb64e2708a46c
+    meta = 242 238
+    frag = 239 236
+    old = 167 normal
+    new = 030 normal
+    context = 240
+    commit = 246 024
