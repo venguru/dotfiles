@@ -130,3 +130,5 @@ colorscheme hybrid_custom
 "colorscheme hybrid
 set t_Co=256
 
+autocmd BufRead,BufNewFile *.xonshrc setfiletype python
+autocmd BufRead,BufNewFile *.xsh setfiletype python
