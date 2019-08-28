@@ -152,3 +152,5 @@ export DISPLAY=localhost:0.0
 # WSLの場合、Windowsで作成したフォルダの色分けを変更
 if is_wsl ; then LS_COLORS="${LS_COLORS}:ow=01;34"; export LS_COLORS; fi
 
+alias x='.local/bin/xonsh'
+
