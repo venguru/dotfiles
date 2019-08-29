@@ -210,6 +210,11 @@ tmux_split_window() {
     ln -s $DOTPATH/shell/ide $HOME/bin/ide
 }
 
+jupyter_on_docker() {
+    chmod +x $DOTPATH/shell/dj
+    ln -s $DOTPATH/shell/dj $HOME/bin/dj
+}
+
 initialize() {
     echo "init"
 
