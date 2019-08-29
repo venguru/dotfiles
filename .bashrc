@@ -153,7 +153,7 @@ export DISPLAY=localhost:0.0
 if is_wsl ; then LS_COLORS="${LS_COLORS}:ow=01;34"; export LS_COLORS; fi
 
 if is_wsl ;then
-    alias x='.local/bin/xonsh'
+    alias x='$HOME/.local/bin/xonsh'
 else
     alias x='xonsh'
 fi
