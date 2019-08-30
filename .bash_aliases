@@ -32,3 +32,6 @@ alias drmi='docker rmi'
 # tmux
 #alias tmux='rm -rf /tmp/tmux* && tmux'
 
+# gcloud
+alias gssh='gcloud compute ssh'
+
