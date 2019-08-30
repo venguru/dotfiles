@@ -148,6 +148,7 @@ export PATH=$PATH:$HOME/bin
 eval "$(direnv hook bash)"
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 export DISPLAY=localhost:0.0
+if is_wsl ; then export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0; fi
 
 # WSLの場合、Windowsで作成したフォルダの色分けを変更
 if is_wsl ; then LS_COLORS="${LS_COLORS}:ow=01;34"; export LS_COLORS; fi
