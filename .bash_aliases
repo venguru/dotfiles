@@ -34,4 +34,5 @@ alias drmi='docker rmi'
 
 # gcloud
 alias gssh='gcloud compute ssh'
+alias gscp='gcloud compute scp'
 
