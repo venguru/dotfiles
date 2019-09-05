@@ -36,3 +36,4 @@ alias drmi='docker rmi'
 alias gssh='gcloud compute ssh'
 alias gscp='gcloud compute scp'
 
+alias hg='history | grep'
