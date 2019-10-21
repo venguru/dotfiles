@@ -155,6 +155,7 @@ if is_wsl ; then LS_COLORS="${LS_COLORS}:ow=01;34"; export LS_COLORS; fi
 
 if is_wsl ;then
     alias x='$HOME/.local/bin/xonsh'
+    alias pipenv='$HOME/.local/bin/pipenv'
 else
     alias x='xonsh'
 fi
