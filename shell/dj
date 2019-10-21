@@ -1,3 +1,4 @@
 #!/bin/bash
 
 docker run --rm -e GRANT_SUDO=yes --user root -v $(pwd):/home/jovyan/project -w=/home/jovyan/project -p 8888:8888 jupyterlab
+
