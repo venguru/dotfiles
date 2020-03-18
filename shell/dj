@@ -1,4 +1,9 @@
 #!/bin/bash
 
-docker run --rm -e GRANT_SUDO=yes --user root -v $(pwd):/home/jovyan/project -w=/home/jovyan/project -p 8888:8888 jupyterlab
+port=8888
+if [ $# -ne 0 ]; then
+    port=$1
+fi
+
+docker run --rm -e GRANT_SUDO=yes --user root -v $(pwd):/home/jovyan/project -w=/home/jovyan/project -p $port:8888 jupyterlab
 
