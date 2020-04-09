@@ -210,6 +210,19 @@ tmux_split_window() {
     ln -s $DOTPATH/shell/ide $HOME/bin/ide
 }
 
+install_go() {
+  wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+  tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
+}
+
+install_ghq() {
+    if is_osx ; then
+        brew install ghq
+    elif is_linux ; then
+        go get github.com/motemen/ghq
+    fi
+}
+
 jupyter_on_docker() {
     chmod +x $DOTPATH/shell/dj
     ln -s $DOTPATH/shell/dj $HOME/bin/dj
@@ -232,6 +245,8 @@ initialize() {
     if ! has "pythonz"; then install_pythonz; fi
     if ! has "fs"; then file_open; fi
     if ! has "ide"; then tmux_split_window; fi
+    if ! has "go"; then intall_go; fi
+    if ! has "ghq"; then intall_ghq; fi
 
     deploy
 

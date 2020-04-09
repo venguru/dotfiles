@@ -121,9 +121,7 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 
 # go
-export PATH=$PATH:/usr/lib/go-1.12/bin
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin
 
 if [ $OSTYPE = "msys" ]; then
     # docker
