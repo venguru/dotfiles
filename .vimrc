@@ -133,3 +133,8 @@ set t_Co=256
 autocmd BufRead,BufNewFile *.xonshrc setfiletype python
 autocmd BufRead,BufNewFile *.xsh setfiletype python
 autocmd BufRead,BufNewFile *.envrc setfiletype sh
+
+" カーソル位置を記憶
+if has("autocmd")
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
