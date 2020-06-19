@@ -121,6 +121,7 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 
 # go
+export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
 if [ $OSTYPE = "msys" ]; then
@@ -137,6 +138,15 @@ if [ $OSTYPE = "msys" ]; then
     alias netstat='wincmd netstat'
     alias ping='wincmd ping'
 fi
+
+# pyenv
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+
+eval "$(pyenv init -)"
+
+# pipenv
+export PIPENV_VENV_IN_PROJECT=true
 
 # tmux
 export TMUX_TMPDIR=/tmp
