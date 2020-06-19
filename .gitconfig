@@ -4,6 +4,10 @@
 
 [core]
 	autocrlf = false
+    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+
+[interactive]
+    diffFilter = delta --color-only
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -34,3 +38,5 @@
     new = 030 normal
     context = 240
     commit = 246 024
+[credential]
+	helper = cache

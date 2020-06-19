@@ -152,7 +152,7 @@ install_peco() {
     latest=$(
     curl -fsSI https://github.com/peco/peco/releases/latest |
         tr -d '\r' |
-        awk -F'/' '/^Location:/{print $NF}'
+        awk -F'/' '/^location:/{print $NF}'
     )
 
     : ${latest:?}
@@ -212,7 +212,7 @@ tmux_split_window() {
 
 install_go() {
   wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-  tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
+  sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
 }
 
 install_ghq() {
@@ -220,6 +220,15 @@ install_ghq() {
         brew install ghq
     elif is_linux ; then
         go get github.com/motemen/ghq
+    fi
+}
+
+install_delta() {
+    if is_linux ; then
+        wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+        tar xvfz delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+        cp -p delta-0.1.1-x86_64-unknown-linux-musl/delta $HOME/bin/
+        rm delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
     fi
 }
 
@@ -239,14 +248,15 @@ initialize() {
     fi
 
     vim_colors
-    peco --version || install_peco
+    if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
     if ! has "direnv"; then install_direnv; fi
     if ! has "pythonz"; then install_pythonz; fi
     if ! has "fs"; then file_open; fi
     if ! has "ide"; then tmux_split_window; fi
-    if ! has "go"; then intall_go; fi
-    if ! has "ghq"; then intall_ghq; fi
+    if ! has "go"; then install_go; fi
+    if ! has "ghq"; then install_ghq; fi
+    if ! has "delta"; then install_delta; fi
 
     deploy
 
