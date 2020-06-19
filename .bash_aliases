@@ -2,8 +2,8 @@
 alias fig='docker-compose'
 
 # ghq, peco, hub
-alias g='cd $(ghq root)/$(ghq list | peco)'
-alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
+alias gh='cd $(ghq root)/$(ghq list | peco)'
+alias hb='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
 function find_cd() {
         cd "$(find . -type d | peco)"  
