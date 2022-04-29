@@ -239,13 +239,14 @@ install_go() {
   echo "----- installing golang"
   # wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
   # sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
+  curl -fsSI https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
   rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
 
   echo "PAT=$PATH:/usr/local/go/bin" >> $HOME/.bashrc
   source $HOME/.bash_profile
 
   go version
-  echo -e "finished installing golang"
+  echo -e "finished installing golang\n"
 }
 
 install_ghq() {
@@ -259,7 +260,7 @@ install_ghq() {
         # git clone https://github.com/x-motemen/ghq $install_dir
         # cd $install_dir
         # make install > /dev/null
-        go install github.com/x-motemen/ghq@latest
+        go install github.com/x-motemen/ghq@latest >> /dev/null
     fi
 
     ghq --version
@@ -273,10 +274,10 @@ install_delta() {
     if is_linux ; then
         # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
 
-        curl -fsSI https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
-        tar xvfz delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
-        cp -p delta-0.1.1-x86_64-unknown-linux-musl/delta $HOME/bin/
-        rm delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+        curl -fsSI https://github.com/dandavison/delta/releases/download/0.12.1/delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
+        tar xvfz delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
+        cp -p delta-0.12.1-x86_64-unknown-linux-musl/delta $HOME/bin/
+        rm delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
     fi
 
     delta --version
