@@ -163,8 +163,6 @@ install_peco() {
 
     : ${latest:?}
 
-    mkdir -p $HOME/bin
-
     if is_osx ; then
         curl -fsSL "https://github.com/peco/peco/releases/download/v0.5.3/peco_darwin_amd64.zip" -o peco_darwin_amd64.zip
         unzip peco_darwin_amd64.zip
@@ -280,7 +278,7 @@ install_delta() {
         rm delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
     fi
 
-    delta --version
+    $HOME/bin/delta --version
     echo -e "finished installing delta"
 }
 
@@ -299,6 +297,8 @@ initialize() {
         download_repo
     fi
 
+    mkdir -p $HOME/bin
+
     vim_colors
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
@@ -307,7 +307,7 @@ initialize() {
     if ! has "fs"; then file_open; fi
     if ! has "ide"; then tmux_split_window; fi
     # if ! has "go"; then install_go; fi
-    install_go
+    # install_go
     if ! has "ghq"; then install_ghq; fi
     if ! has "delta"; then install_delta; fi
 
