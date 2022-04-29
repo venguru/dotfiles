@@ -247,26 +247,27 @@ install_go() {
   echo -e "finished installing golang\n"
 }
 
-install_ghq() {
-    echo "----- installing ghq"
+install_gopath() {
+    echo "----- installing gopath"
 
     echo 'export GOPATH="$HOME/.go"'  >> $HOME/.bash_profile
-    # echo 'export GOPATH="$GOPATH/bin:$PATH"'  >> $HOME/.bash_profile
     echo 'export PATH="$PATH:$GOPATH/bin"' >> $HOME/.bash_profile
 
     source $HOME/.bash_profile
 
     go env GOPATH
 
+    echo -e "finished installing gopath"
+}
+
+install_ghq() {
+    echo "----- installing ghq"
+
     install_dir="$HOME/ghq_install"
     if is_osx ; then
         brew install ghq
     elif is_linux ; then
-        # mkdir $install_dir
-        # git clone https://github.com/x-motemen/ghq $install_dir
-        # cd $install_dir
-        # make install > /dev/null
-        go install github.com/x-motemen/ghq@latest >/dev/null 2>&1
+        go install github.com/x-motemen/ghq@latest >/dev/null
     fi
 
     ghq --version
@@ -277,17 +278,24 @@ install_ghq() {
 install_delta() {
     echo "----- installing delta"
 
+    latest=$(
+    curl -fsSI https://github.com/dandavison/delta/releases |
+        tr -d '\r' |
+        awk -F'/' '/^location:/{print $NF}'
+    )
+
+
     if is_linux ; then
         # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
 
-        curl -fsSL https://github.com/dandavison/delta/releases/download/0.12.1/delta-0.12.1-x86_64-unknown-linux-musl.tar.gz -o delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
-        tar xf delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
-        cp -p delta-0.12.1-x86_64-unknown-linux-musl/delta $HOME/bin/
-        rm delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
+        curl -fsSL https://github.com/dandavison/delta/releases/download/$latest/delta-$latest-x86_64-unknown-linux-musl.tar.gz -o delta-linux-musl.tar.gz
+        tar xf delta-linux-musl.tar.gz
+        cp -p delta-linux-musl/delta $HOME/bin/
+        rm delta-linux-musl.tar.gz
     fi
 
     $HOME/bin/delta --version
-    echo -e "finished installing deltai\n"
+    echo -e "finished installing delta\n"
 }
 
 jupyter_on_docker() {
@@ -316,6 +324,7 @@ initialize() {
     if ! has "ide"; then tmux_split_window; fi
     # if ! has "go"; then install_go; fi
     # install_go
+    install_gopath
     if ! has "ghq"; then install_ghq; fi
     if ! has "delta"; then install_delta; fi
 
