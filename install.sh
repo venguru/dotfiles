@@ -250,6 +250,13 @@ install_go() {
 install_ghq() {
     echo "----- installing ghq"
 
+    echo 'export GOPATH="$HOME/.go"'  >> $HOME/.bash_profile
+    echo 'export GOPATH="$GOPATH/bin:$PATH"'  >> $HOME/.bash_profile
+
+    source $HOME/.bash_profile
+
+    go env GOPATH
+
     install_dir="$HOME/ghq_install"
     if is_osx ; then
         brew install ghq
@@ -258,7 +265,7 @@ install_ghq() {
         # git clone https://github.com/x-motemen/ghq $install_dir
         # cd $install_dir
         # make install > /dev/null
-        go install github.com/x-motemen/ghq@latest >> /dev/null
+        go install github.com/x-motemen/ghq@latest >/dev/null 2>&1
     fi
 
     ghq --version
@@ -279,7 +286,7 @@ install_delta() {
     fi
 
     $HOME/bin/delta --version
-    echo -e "finished installing delta"
+    echo -e "finished installing deltai\n"
 }
 
 jupyter_on_docker() {
