@@ -279,7 +279,7 @@ install_delta() {
     echo "----- installing delta"
 
     latest=$(
-    curl -fsSI https://github.com/dandavison/delta/releases |
+    curl -fsSI https://github.com/dandavison/delta/releases/latest |
         tr -d '\r' |
         awk -F'/' '/^location:/{print $NF}'
     )
