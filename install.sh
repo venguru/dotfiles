@@ -187,7 +187,7 @@ install_enhancd() {
     if is_linux; then
         git clone https://github.com/b4b4r07/enhancd $HOME/enhancd
         echo "source ~/enhancd/init.sh"  >> $HOME/.bash_profile
-        source ~/.bash_profile
+        source $HOME/.bash_profile
     fi
 
     echo "finished installing enhancd"
@@ -205,20 +205,23 @@ install_direnv() {
     if is_osx ; then
         wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
     elif is_linux; then
-        # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
         curl -fsSLo $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
     fi
 
     chmod +x $HOME/bin/direnv
 
-    echo -n "direnv "; $HOME/bin/direnv --version
+    echo -n "direnv version "; $HOME/bin/direnv --version
 
     echo "finished installing direnv"
 }
 
 install_pythonz() {
+    echo "installing pythonz"
+
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     exec $SHELL
+
+    echo "finished installing pythonz"
 }
 
 file_open() {
@@ -238,11 +241,19 @@ install_go() {
 }
 
 install_ghq() {
+    echo "installing ghq"
+
+    install_dir="$HOME/ghq_install"
     if is_osx ; then
         brew install ghq
     elif is_linux ; then
-        go get github.com/motemen/ghq
+        mkdir $install_dir
+        git clone https://github.com/x-motemen/ghq $install_dir
+        cd $install_dir
+        make install
     fi
+
+    echo "finised installing ghq"
 }
 
 install_delta() {
@@ -273,7 +284,7 @@ initialize() {
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
     if ! has "direnv"; then install_direnv; fi
-    if ! has "pythonz"; then install_pythonz; fi
+    # if ! has "pythonz"; then install_pythonz; fi
     if ! has "fs"; then file_open; fi
     if ! has "ide"; then tmux_split_window; fi
     if ! has "go"; then install_go; fi
