@@ -251,7 +251,8 @@ install_ghq() {
     echo "----- installing ghq"
 
     echo 'export GOPATH="$HOME/.go"'  >> $HOME/.bash_profile
-    echo 'export GOPATH="$GOPATH/bin:$PATH"'  >> $HOME/.bash_profile
+    # echo 'export GOPATH="$GOPATH/bin:$PATH"'  >> $HOME/.bash_profile
+    echo 'export PATH="$PATH:$GOPATH/bin"' >> $HOME/.bash_profile
 
     source $HOME/.bash_profile
 
@@ -280,7 +281,7 @@ install_delta() {
         # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
 
         curl -fsSL https://github.com/dandavison/delta/releases/download/0.12.1/delta-0.12.1-x86_64-unknown-linux-musl.tar.gz -o delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
-        tar xvfz delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
+        tar xf delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
         cp -p delta-0.12.1-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
     fi
