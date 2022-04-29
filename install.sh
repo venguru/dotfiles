@@ -236,7 +236,7 @@ tmux_split_window() {
 }
 
 install_go() {
-  echo "installing golang"
+  echo "----- installing golang"
   # wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
   # sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
   rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
@@ -268,12 +268,19 @@ install_ghq() {
 }
 
 install_delta() {
+    echo "----- installing delta"
+
     if is_linux ; then
-        wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+        # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+
+        curl -fsSL https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
         tar xvfz delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
         cp -p delta-0.1.1-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
     fi
+
+    delta --version
+    echo -e "finished installing delta"
 }
 
 jupyter_on_docker() {
