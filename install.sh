@@ -273,7 +273,7 @@ install_delta() {
     if is_linux ; then
         # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
 
-        curl -fsSL https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
+        curl -fsSI https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
         tar xvfz delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
         cp -p delta-0.1.1-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
@@ -305,7 +305,8 @@ initialize() {
     # if ! has "pythonz"; then install_pythonz; fi
     if ! has "fs"; then file_open; fi
     if ! has "ide"; then tmux_split_window; fi
-    if ! has "go"; then install_go; fi
+    # if ! has "go"; then install_go; fi
+    install_go
     if ! has "ghq"; then install_ghq; fi
     if ! has "delta"; then install_delta; fi
 
