@@ -205,7 +205,7 @@ install_direnv() {
     if is_osx ; then
         wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
     elif is_linux; then
-        curl -fsSLo $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
+        curl -fsSL https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64 -o $HOME/bin/direnv
     fi
 
     chmod +x $HOME/bin/direnv
@@ -239,7 +239,7 @@ install_go() {
   echo "----- installing golang"
   # wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
   # sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
-  curl -fsSI https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
+  curl -fsSL https://go.dev/dl/go1.18.1.linux-amd64.tar.gz -o go1.18.1.linux-amd64.tar.gz
   rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
 
   echo "PAT=$PATH:/usr/local/go/bin" >> $HOME/.bashrc
@@ -274,7 +274,7 @@ install_delta() {
     if is_linux ; then
         # wget https://github.com/dandavison/delta/releases/download/0.1.1/delta-0.1.1-x86_64-unknown-linux-musl.tar.gz
 
-        curl -fsSI https://github.com/dandavison/delta/releases/download/0.12.1/delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
+        curl -fsSL https://github.com/dandavison/delta/releases/download/0.12.1/delta-0.12.1-x86_64-unknown-linux-musl.tar.gz -o delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
         tar xvfz delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
         cp -p delta-0.12.1-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-0.12.1-x86_64-unknown-linux-musl.tar.gz
