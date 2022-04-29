@@ -236,8 +236,16 @@ tmux_split_window() {
 }
 
 install_go() {
-  wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-  sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
+  echo "installing golang"
+  # wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+  # sudo tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz go/
+  rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
+
+  echo "PAT=$PATH:/usr/local/go/bin" >> $HOME/.bashrc
+  source $HOME/.bash_profile
+
+  go version
+  echo -e "finished installing golang"
 }
 
 install_ghq() {
@@ -247,10 +255,11 @@ install_ghq() {
     if is_osx ; then
         brew install ghq
     elif is_linux ; then
-        mkdir $install_dir
-        git clone https://github.com/x-motemen/ghq $install_dir
-        cd $install_dir
-        make install > /dev/null
+        # mkdir $install_dir
+        # git clone https://github.com/x-motemen/ghq $install_dir
+        # cd $install_dir
+        # make install > /dev/null
+        go install github.com/x-motemen/ghq@latest
     fi
 
     ghq --version
