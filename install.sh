@@ -288,7 +288,7 @@ install_delta() {
     if is_linux ; then
         curl -fsSL https://github.com/dandavison/delta/releases/download/$latest/delta-$latest-x86_64-unknown-linux-musl.tar.gz -o delta-$latest-x86_64-unknown-linux-musl.tar.gz 
         tar xf delta-$latest-x86_64-unknown-linux-musl.tar.gz
-        cp -p delta-$latest-x86_64-unknown-linux-musl $HOME/bin/
+        cp -p delta-$latest-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-$latest-x86_64-unknown-linux-musl
     fi
 
