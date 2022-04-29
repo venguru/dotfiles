@@ -149,7 +149,7 @@ vim_colors() {
         wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
     fi
 
-    echo "finished installing vim colors\n"
+    echo -e "finished installing vim colors\n"
 }
 
 install_peco() {
@@ -178,7 +178,7 @@ install_peco() {
 
     $HOME/bin/peco --version
 
-    echo "finished installing peco\n"
+    echo -e "finished installing peco\n"
 }
 
 install_enhancd() {
@@ -190,7 +190,7 @@ install_enhancd() {
         source $HOME/.bash_profile
     fi
 
-    echo "finished installing enhancd\n"
+    echo -e "finished installing enhancd\n"
 }
 
 install_direnv() {
@@ -212,7 +212,7 @@ install_direnv() {
 
     echo -n "direnv version "; $HOME/bin/direnv --version
 
-    echo "finished installing direnv\n"
+    echo -e "finished installing direnv\n"
 }
 
 install_pythonz() {
@@ -221,7 +221,7 @@ install_pythonz() {
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     exec $SHELL
 
-    echo "finished installing pythonz\n"
+    echo -e "finished installing pythonz\n"
 }
 
 file_open() {
@@ -253,7 +253,9 @@ install_ghq() {
         make install > /dev/null
     fi
 
-    echo "finised installing ghq\n"
+    ghq --version
+
+    echo -e "finised installing ghq\n"
 }
 
 install_delta() {
