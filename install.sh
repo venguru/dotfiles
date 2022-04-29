@@ -153,8 +153,9 @@ vim_colors() {
 }
 
 install_peco() {
-    latest=$(
     echo "installing peco"
+
+    latest=$(
     curl -fsSI https://github.com/peco/peco/releases/latest |
         tr -d '\r' |
         awk -F'/' '/^location:/{print $NF}'
@@ -204,12 +205,13 @@ install_direnv() {
     if is_osx ; then
         wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
     elif is_linux; then
-        wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
+        # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
+        curl -fsSLo $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64
     fi
 
     chmod +x $HOME/bin/direnv
 
-    $HOME/bin/direnv --version
+    echo -n "direnv "; $HOME/bin/direnv --version
 
     echo "finished installing direnv"
 }
