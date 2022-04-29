@@ -135,6 +135,8 @@ download_repo() {
 vim_colors() {
     vimdir="$DOTPATH/.vim/colors"
 
+    echo "installing vim colors"
+
     if [ ! -e $vimdir"/hybrid.vim" ];then
         wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
     fi
@@ -146,10 +148,13 @@ vim_colors() {
     if [ ! -e $vimdir"/molokai.vim" ];then
         wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
     fi
+
+    echo "finished installing vim colors"
 }
 
 install_peco() {
     latest=$(
+    echo "installing peco"
     curl -fsSI https://github.com/peco/peco/releases/latest |
         tr -d '\r' |
         awk -F'/' '/^location:/{print $NF}'
@@ -171,18 +176,29 @@ install_peco() {
     chmod +x $HOME/bin/peco
 
     $HOME/bin/peco --version
+
+    echo "finished installing peco"
 }
 
 install_enhancd() {
-    git clone https://github.com/b4b4r07/enhancd $HOME/enhancd
-    source ~/.bash_profile
+    echo "installing enhancd"
+
+    if is_linux; then
+        git clone https://github.com/b4b4r07/enhancd $HOME/enhancd
+        echo "source ~/enhancd/init.sh"  >> $HOME/.bash_profile
+        source ~/.bash_profile
+    fi
+
+    echo "finished installing enhancd"
 }
 
 install_direnv() {
+    echo "installing direnv"
+
     latest=$(
     curl -fsSI https://github.com/direnv/direnv/releases/latest |
         tr -d '\r' |
-        awk -F'/' '/^Location:/{print $NF}'
+        awk -F'/' '/^location:/{print $NF}'
     )
 
     if is_osx ; then
@@ -192,6 +208,10 @@ install_direnv() {
     fi
 
     chmod +x $HOME/bin/direnv
+
+    $HOME/bin/direnv --version
+
+    echo "finished installing direnv"
 }
 
 install_pythonz() {
