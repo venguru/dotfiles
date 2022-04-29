@@ -135,7 +135,7 @@ download_repo() {
 vim_colors() {
     vimdir="$DOTPATH/.vim/colors"
 
-    echo "installing vim colors"
+    echo "----- installing vim colors"
 
     if [ ! -e $vimdir"/hybrid.vim" ];then
         wget https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -P $vimdir
@@ -149,11 +149,11 @@ vim_colors() {
         wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -P $vimdir
     fi
 
-    echo "finished installing vim colors"
+    echo "finished installing vim colors\n"
 }
 
 install_peco() {
-    echo "installing peco"
+    echo "----- installing peco"
 
     latest=$(
     curl -fsSI https://github.com/peco/peco/releases/latest |
@@ -178,11 +178,11 @@ install_peco() {
 
     $HOME/bin/peco --version
 
-    echo "finished installing peco"
+    echo "finished installing peco\n"
 }
 
 install_enhancd() {
-    echo "installing enhancd"
+    echo "----- installing enhancd"
 
     if is_linux; then
         git clone https://github.com/b4b4r07/enhancd $HOME/enhancd
@@ -190,11 +190,11 @@ install_enhancd() {
         source $HOME/.bash_profile
     fi
 
-    echo "finished installing enhancd"
+    echo "finished installing enhancd\n"
 }
 
 install_direnv() {
-    echo "installing direnv"
+    echo "----- installing direnv"
 
     latest=$(
     curl -fsSI https://github.com/direnv/direnv/releases/latest |
@@ -212,16 +212,16 @@ install_direnv() {
 
     echo -n "direnv version "; $HOME/bin/direnv --version
 
-    echo "finished installing direnv"
+    echo "finished installing direnv\n"
 }
 
 install_pythonz() {
-    echo "installing pythonz"
+    echo "----- installing pythonz"
 
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     exec $SHELL
 
-    echo "finished installing pythonz"
+    echo "finished installing pythonz\n"
 }
 
 file_open() {
@@ -241,7 +241,7 @@ install_go() {
 }
 
 install_ghq() {
-    echo "installing ghq"
+    echo "----- installing ghq"
 
     install_dir="$HOME/ghq_install"
     if is_osx ; then
@@ -250,10 +250,10 @@ install_ghq() {
         mkdir $install_dir
         git clone https://github.com/x-motemen/ghq $install_dir
         cd $install_dir
-        make install
+        make install > /dev/null
     fi
 
-    echo "finised installing ghq"
+    echo "finised installing ghq\n"
 }
 
 install_delta() {
