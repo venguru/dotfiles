@@ -4,7 +4,7 @@
 
 [core]
 	autocrlf = false
-    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+    # pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
 
 [interactive]
     diffFilter = delta --color-only
@@ -38,5 +38,15 @@
     new = 030 normal
     context = 240
     commit = 246 024
+
 [credential]
 	helper = cache
+
+[delta]
+    line-numbers = true
+    side-by-side = true
+    plus-color = "syntax #012800"
+    minus-color = "syntax #340001"
+
+[init]
+	defaultBranch = main

@@ -392,7 +392,7 @@ deploy() {
 
     for f in .??*
     do
-        [ "$f" = ".git" ] && continue
+        [ "$f" = ".git" -o "$f" = ".github" ] && continue
 
         ln -snfv "$DOTPATH"/"$f" "$HOME"/"$f"
     done
