@@ -152,6 +152,18 @@ vim_colors() {
     echo -e "finished installing vim colors\n"
 }
 
+bashrc() {
+    echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bashrc
+    echo "export TMUX_TMPDIR=/tmp" >> $HOME/.bashrc
+
+    if is_wsl ; then
+        echo "export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0" >> $HOME/.bashrc
+        echo "LS_COLORS='${LS_COLORS}:ow=01;34'" >> $HOME/.bashrc
+        echo "export LS_COLORS" >> $HOME/.bashrc
+        echo "alias x='$HOME/.local/bin/xonsh'" >> $HOME/.bashrc
+    fi
+}
+
 install_homebrew() {
     echo "----- installing homebrew"
 
@@ -331,6 +343,7 @@ initialize() {
 
     # if is_osx ; then install_homebrew; fi
     vim_colors
+    bashrc
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
     if ! has "direnv"; then install_direnv; fi
