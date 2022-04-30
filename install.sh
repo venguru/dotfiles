@@ -209,7 +209,6 @@ install_direnv() {
     chmod +x $HOME/bin/direnv
 
     echo -n "direnv version "; $HOME/bin/direnv --version
-
     echo -e "finished installing direnv\n"
 }
 
@@ -257,7 +256,7 @@ install_gopath() {
 
     go env GOPATH
 
-    echo -e "finished installing gopath"
+    echo -e "finished installing gopath\n"
 }
 
 install_ghq() {
@@ -325,6 +324,8 @@ initialize() {
     install_gopath
     if ! has "ghq"; then install_ghq; fi
     if ! has "delta"; then install_delta; fi
+
+    jupyter_on_docker
 
     deploy
 
