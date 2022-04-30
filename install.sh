@@ -225,11 +225,11 @@ install_direnv() {
     )
 
     if is_osx ; then
-        # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
+        # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/${latest}/direnv.darwin-amd64
         brew install direnv > /dev/null
         echo -n "direnv version "; direnv --version
     elif is_linux; then
-        curl -fsSL https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64 -o $HOME/bin/direnv
+        curl -fsSL https://github.com/direnv/direnv/releases/download/${latest}/direnv.linux-amd64 -o $HOME/bin/direnv
         chmod +x $HOME/bin/direnv
 
         echo -n "direnv version "; $HOME/bin/direnv --version
@@ -314,10 +314,10 @@ install_delta() {
         brew install git-delta > /dev/null
         delta --version
     elif is_linux ; then
-        curl -fsSL https://github.com/dandavison/delta/releases/download/$latest/delta-$latest-x86_64-unknown-linux-musl.tar.gz -o delta-$latest-x86_64-unknown-linux-musl.tar.gz 
-        tar xf delta-$latest-x86_64-unknown-linux-musl.tar.gz
-        cp -p delta-$latest-x86_64-unknown-linux-musl/delta $HOME/bin/
-        rm delta-$latest-x86_64-unknown-linux-musl
+        curl -fsSL https://github.com/dandavison/delta/releases/download/${latest}/delta-${latest}-x86_64-unknown-linux-musl.tar.gz -o delta-${latest}-x86_64-unknown-linux-musl.tar.gz 
+        tar xf delta-${latest}-x86_64-unknown-linux-musl.tar.gz
+        cp -p delta-${latest}-x86_64-unknown-linux-musl/delta $HOME/bin/
+        rm -rf delta-${latest}-x86_64-unknown-linux-musl
         $HOME/bin/delta --version
     fi
 
@@ -331,7 +331,7 @@ install_xonsh() {
         brew install xonsh > /dev/null
         xonsh -V
     elif is_linux ; then
-        python3 -m pip install 'xonsh[full]'
+        python3 -m pip install 'xonsh[full]' > /dev/null
         xonsh -V
     fi
 

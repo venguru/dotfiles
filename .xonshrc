@@ -1,56 +1,65 @@
-# -*- coding: utf-8 -*-
-# ほとんどここを参考
-# https://vaaaaaanquish.hatenablog.com/entry/2018/06/22/194227
+# $PATH.append('/usr/local/bin')
 
-# エディタ
-$EDITOR = '/usr/local/bin/vim'
-$VISUAL = '/usr/local/bin/vim'
-# vi風の操作がシェル上で直感的でないのでFalse
-$VI_MODE = False
-# 補完をEnterで直接実行しない
-$COMPLETIONS_CONFIRM = True
+# 参考元
+# https://vaaaaaanquish.hatenablog.com/entry/2017/12/09/154201
+
 # Ctrl + D で終了しない
 $IGNOREEOF = True
 # tabではなく空白4つ
 $INDENT = "    "
 # 補完時に大小区別しない
 $CASE_SENSITIVE_COMPLETIONS = False
+# 補完選択Enterで即実行しない
+$COMPLETIONS_CONFIRM = True
 # 連続重複コマンドを保存しない
-$HISTCONTROL = "ignoredups"
+# $HISTCONTROL = (ignoredups)
 # 括弧を補完
 $XONSH_AUTOPAIR = True
-# ディレクトリ名を入力でcd
+# ディレクトリ名を入力すればcdできる
 $AUTO_CD = True
 # エラー全て吐くように
 $XONSH_SHOW_TRACEBACK = True
-# サブプロセスタイムアウトのメッセージ抑制
+# プロンプトの設定タイムアウトのメッセージ抑制
 $SUPPRESS_BRANCH_TIMEOUT_MESSAGE = True
-# キー入力即評価
-$UPDATE_COMPLETIONS_ON_KEYPRESS = True
-# プロンプトの表記
-$PROMPT = "{INTENSE_RED}{user}{INTENSE_GREEN}@{INTENSE_BLUE}{hostname}{INTENSE_YELLOW} [ {cwd} ] {GREEN}$ "
-# lsコマンドの結果の見た目
-$LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;37:sg=46;34:tw=42;34:ow=43;34"
 
-aliases['ll']='ls -lF'
-aliases['la']='ls -lA'
-aliases['l']='ls -CF'
+# プロンプト上には場所だけ出す
+$PROMPT = "{INTENSE_YELLOW}[ {cwd} ] {GREEN}$ "
+# 下部にuser, host情報を追加
+$BOTTOM_TOOLBAR = "{BACKGROUND_WHITE}{BLACK}{user}@{hostname}"
+# 右にbranch情報
+$RIGHT_PROMPT = "{curr_branch}"
+# lsコマンドの結果の見た目
+$LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30"
+
+# aliases
+aliases["lt"] = "ls -ltr"
+aliases["l"] = "ls -ltr"
+aliases["la"] = "ls -la"
+aliases["ll"] = "ls -l"
+aliases["so"] = "source"
+aliases["vi"] = "vim"
+aliases["cp"] = "cp -i"
+aliases["rm"] = "rm -i"
+aliases["ju"] = "jupyter notebook"
 # git
 aliases['g']='git'
 aliases['s']='git status'
-aliases['m']='git checkout master'
+aliases['m']='git checkout main'
 aliases['d']='git diff'
-# tmux
-aliases['tmux']='tmux -2'
+
+# https://github.com/sun-yryr/xontrib-enhancd
+xontrib load enhancd
 
 # 履歴をpecoに流す
 # https://qiita.com/riktor/items/4a90b4e125cd091a9d07
 # pecoのinstall : https://qiita.com/ngyuki/items/94a7e638655d9910971b
 import json
+import re
+import os
 from collections import OrderedDict
 from operator import itemgetter
 def get_history(session_history=None, return_list=False):
-    hist_dir = __xonsh_env__['XONSH_DATA_DIR']
+    hist_dir = __xonsh__.env['XONSH_DATA_DIR']
     files = [ os.path.join(hist_dir,f) for f in os.listdir(hist_dir)
               if f.startswith('xonsh-') and f.endswith('.json') ]
     file_hist = [ json.load(open(f))['data']['cmds'] for f in files ]
@@ -117,10 +126,4 @@ def _free(args, stdin=None):
     disk_info = $(diskutil info /)
     return [i for i in disk_info.splitlines() if "Free" in i][0] + '\n'
 aliases['fr'] = _free
-
-# gc
-import gc
-def _gc(args, stdin=None):
-    gc.collect()
-aliases['gc'] = _gc
 
