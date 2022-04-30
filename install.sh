@@ -153,7 +153,12 @@ vim_colors() {
 }
 
 install_homebrew() {
+    echo "----- installing homebrew"
+
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew -v
+
+    echo -e "finished installing homebrew\n"
 }
 
 install_peco() {
@@ -174,14 +179,14 @@ install_peco() {
         # rm -fr peco_darwin_amd64*
 
         # curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_darwin_amd64.zip" | tar -xz --to-stdout peco_darwin_amd64/peco > $HOME/bin/peco
-        brew install peco
+        brew install peco > /dev/null
+        peco --version
     elif is_linux ; then
         curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
+        chmod +x $HOME/bin/peco
+        $HOME/bin/peco --version
     fi
 
-    chmod +x $HOME/bin/peco
-
-    $HOME/bin/peco --version
 
     echo -e "finished installing peco\n"
 }
@@ -208,14 +213,16 @@ install_direnv() {
     )
 
     if is_osx ; then
-        wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
+        # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
+        brew install direnv
+        echo -n "direnv version "; direnv --version
     elif is_linux; then
         curl -fsSL https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64 -o $HOME/bin/direnv
+        chmod +x $HOME/bin/direnv
+
+        echo -n "direnv version "; $HOME/bin/direnv --version
     fi
 
-    chmod +x $HOME/bin/direnv
-
-    echo -n "direnv version "; $HOME/bin/direnv --version
     echo -e "finished installing direnv\n"
 }
 
