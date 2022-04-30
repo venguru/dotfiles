@@ -152,6 +152,10 @@ vim_colors() {
     echo -e "finished installing vim colors\n"
 }
 
+install_homebrew() {
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
 install_peco() {
     echo "----- installing peco"
 
@@ -169,7 +173,8 @@ install_peco() {
         # mv peco_darwin_amd64/peco $HOME/bin/peco
         # rm -fr peco_darwin_amd64*
 
-        curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_darwin_amd64.zip" | tar -xz --to-stdout peco_darwin_amd64/peco > $HOME/bin/peco
+        # curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_darwin_amd64.zip" | tar -xz --to-stdout peco_darwin_amd64/peco > $HOME/bin/peco
+        brew install peco
     elif is_linux ; then
         curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
     fi
@@ -314,6 +319,7 @@ initialize() {
 
     mkdir -p $HOME/bin
 
+    if is_mac ; then install_homebrew fi
     vim_colors
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
