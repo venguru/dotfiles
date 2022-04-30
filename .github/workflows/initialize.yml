@@ -30,3 +30,18 @@ jobs:
       - name: Run a install.sh
         run: ./install.sh -i
         shell: bash
+
+  build_mac:
+    # The type of runner that the job will run on
+    # runs-on: [ubuntu-latest, macos-latest]
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a set of commands using the runners shell
+      - name: Run a install.sh
+        run: ./install.sh -i
+        shell: bash
