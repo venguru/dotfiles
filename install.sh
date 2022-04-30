@@ -319,7 +319,7 @@ initialize() {
 
     mkdir -p $HOME/bin
 
-    if is_mac ; then install_homebrew fi
+    if is_mac ; then install_homebrew; fi
     vim_colors
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
