@@ -214,7 +214,7 @@ install_direnv() {
 
     if is_osx ; then
         # wget -O $HOME/bin/direnv https://github.com/direnv/direnv/releases/download/$latest/direnv.darwin-amd64
-        brew install direnv
+        brew install direnv > /dev/null
         echo -n "direnv version "; direnv --version
     elif is_linux; then
         curl -fsSL https://github.com/direnv/direnv/releases/download/$latest/direnv.linux-amd64 -o $HOME/bin/direnv
@@ -278,7 +278,7 @@ install_ghq() {
 
     install_dir="$HOME/ghq_install"
     if is_osx ; then
-        brew install ghq
+        brew install ghq > /dev/null
     elif is_linux ; then
         go install github.com/x-motemen/ghq@latest >/dev/null
     fi
@@ -298,14 +298,17 @@ install_delta() {
     )
 
 
-    if is_linux ; then
+    if is_osx ; then
+        brew install git-delta > /dev/null
+        delta --version
+    elif is_linux ; then
         curl -fsSL https://github.com/dandavison/delta/releases/download/$latest/delta-$latest-x86_64-unknown-linux-musl.tar.gz -o delta-$latest-x86_64-unknown-linux-musl.tar.gz 
         tar xf delta-$latest-x86_64-unknown-linux-musl.tar.gz
         cp -p delta-$latest-x86_64-unknown-linux-musl/delta $HOME/bin/
         rm delta-$latest-x86_64-unknown-linux-musl
+        $HOME/bin/delta --version
     fi
 
-    $HOME/bin/delta --version
     echo -e "finished installing delta\n"
 }
 
@@ -326,7 +329,7 @@ initialize() {
 
     mkdir -p $HOME/bin
 
-    if is_mac ; then install_homebrew; fi
+    # if is_osx ; then install_homebrew; fi
     vim_colors
     if ! has "peco"; then install_peco; fi
     if [ ! -e $HOME/enhancd ]; then install_enhancd; fi
