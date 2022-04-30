@@ -164,10 +164,12 @@ install_peco() {
     : ${latest:?}
 
     if is_osx ; then
-        curl -fsSL "https://github.com/peco/peco/releases/download/v0.5.3/peco_darwin_amd64.zip" -o peco_darwin_amd64.zip
-        unzip peco_darwin_amd64.zip
-        mv peco_darwin_amd64/peco $HOME/bin/peco
-        rm -fr peco_darwin_amd64*
+        # curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_darwin_amd64.zip" -o peco_darwin_amd64.zip
+        # unzip peco_darwin_amd64.zip
+        # mv peco_darwin_amd64/peco $HOME/bin/peco
+        # rm -fr peco_darwin_amd64*
+
+        curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_darwin_amd64.zip" | tar -xz --to-stdout peco_darwin_amd64/peco > $HOME/bin/peco
     elif is_linux ; then
         curl -fsSL "https://github.com/peco/peco/releases/download/${latest}/peco_linux_amd64.tar.gz" | tar -xz --to-stdout peco_linux_amd64/peco > $HOME/bin/peco
     fi
