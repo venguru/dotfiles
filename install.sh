@@ -324,6 +324,20 @@ install_delta() {
     echo -e "finished installing delta\n"
 }
 
+install_xonsh() {
+    echo "----- installing xonsh"
+
+    if is_osx ; then
+        brew install xonsh > /dev/null
+        xonsh -V
+    elif is_linux ; then
+        python3 -m pip install 'xonsh[full]'
+        xonsh -V
+    fi
+
+    echo -e "finished installing xonsh\n"
+}
+
 jupyter_on_docker() {
     chmod +x $DOTPATH/shell/dj
     ln -s $DOTPATH/shell/dj $HOME/bin/dj
@@ -355,6 +369,7 @@ initialize() {
     install_gopath
     if ! has "ghq"; then install_ghq; fi
     if ! has "delta"; then install_delta; fi
+    if ! has "xonsh"; then install_xonsh; fi
 
     jupyter_on_docker
 
